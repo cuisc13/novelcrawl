@@ -54,7 +54,7 @@ def get_chapter_content(c,name):
     url = host + c
     try:
         res = requests.get(url, timeout=2)
-    except requests.exceptions.ConnectionError:
+    except Exception:
         res = requests.get(url)
     tree = html.fromstring(res.content)
     title = tree.xpath('//h1[@itemprop="headline"]/text()')[0]
@@ -72,7 +72,7 @@ def main():
         pn = r.incr('netnovel_id')
         try:
             res = requests.get(url % pn, timeout=2);
-        except requests.exceptions.ConnectionError:
+        except Exception:
             res = requests.get(url % pn);
         con = res.content
         tree = html.fromstring(con)
