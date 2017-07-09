@@ -42,10 +42,11 @@ def get_chapter_list(tree):
     boxs = boxs[2:]
     juan = []
     for box in boxs:
-        juan_name = box.xpath('//h3/span/text()')[0]
-        chapter_url_element = box.xpath('//ul/li/a')
+        juan_name = box.xpath('h2/span/text()')[0]
+        chapter_url_element = box.xpath('ul/li/a')
         chapter_url_list = [a.attrib['href'] for a in chapter_url_element]
         juan.append(dict(juan_name=juan_name, chapter_url_list = chapter_url_list))
+        logger.info(u'卷: %s' %juan_name)
 
     return juan
     #return chapterlist
