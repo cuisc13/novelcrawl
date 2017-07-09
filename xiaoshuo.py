@@ -96,8 +96,8 @@ def main():
             for i, c in enumerate(chapter_url_list):
                 chapter = get_chapter_content(c,name)
                 chapter['index'] = i
+                chapter['juan'] = juan['juan_name']
                 col.update({'juan_list.jid':juan_id},{"$push":{"juan_list.$.chapterlist":chapter}})
-        break
 
 if __name__ == '__main__':
     pass
