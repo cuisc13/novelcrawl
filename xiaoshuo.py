@@ -6,6 +6,7 @@ import requests
 from lxml import html
 from pymongo import MongoClient
 from bson import ObjectId
+import time
 
 import logging
 log_path = "./log.log"
@@ -54,9 +55,10 @@ def get_chapter_list(tree):
 def get_chapter_content(c,name):
     url = host + c
     try:
-        res = requests.get(url, timeout=2)
+        res = requests.get(url, timeout=10)
     except Exception:
-        res = requests.get(url)
+        time.sleep(20)
+        res = requests.get(url, timeout=10)
     tree = html.fromstring(res.content)
     title = tree.xpath('//h1[@itemprop="headline"]/text()')[0]
     logger.info(title)
@@ -72,9 +74,10 @@ def main():
         #pn += 1
         pn = r.incr('netnovel_id')
         try:
-            res = requests.get(url % pn, timeout=2);
+            res = requests.get(url % pn, timeout=10);
         except Exception:
-            res = requests.get(url % pn);
+            time.sleep(20)
+            res = requests.get(url % pn, timeout=10);
         con = res.content
         tree = html.fromstring(con)
         name = tree.xpath('//span[@itemprop="name"]/text()')[0]
